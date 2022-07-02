@@ -18,6 +18,11 @@ jobs:
     - run: pip install pyinstaller
     - run: pyinstaller poigen.spec
 
-    - uses: actions/upload-artifact@v2
+    - uses: "marvinpinto/action-automatic-releases@latest"
       with:
-        path: dist/*
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: true
+          title: "Development Build"
+          files: |
+            POIGen*
