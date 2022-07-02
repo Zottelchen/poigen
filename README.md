@@ -1,14 +1,19 @@
 # POIGen
 
-This is a temporary workaround for Minecraft Overviewer. Since 1.17 Minecraft moved some entities from the chunks to an extra folder in the world called 'entities'. Since Overviewer is not updated to deal with this yet, this little tool was written. 
+This is a temporary workaround for [Minecraft Overviewer](https://github.com/overviewer/Minecraft-Overviewer). Since 1.17 Minecraft moved some entities from the chunks to an extra folder in the world called 'entities'. Since Overviewer is not updated to deal with this yet, this little tool was written. 
 
 ## Usage
+This does NOT generate a map, only the markers. Use Minecraft Overviewer to generate the map.
+
 ### Windows Build
+1. Download latest build.
+2. Extract to a folder.
+3. Run `poigen.exe INPUT_WORLD RENDER_DIRECTORY` from the folder. (replace INPUT_WORLD with the path to the world folder and RENDER_DIRECTORY with the path to the directory where you already have rendered the world)
 
 ### From Source
 1. Clone repository
 2. Install requirements: `pip install -r requirements.txt`
-3. Run `python poigen.py --help` to see all options
+3. Run `python poigen.py INPUT_WORLD RENDER_DIRECTORY` (replace INPUT_WORLD with the path to the world folder and RENDER_DIRECTORY with the path to the directory where you already have rendered the world)
 
 ## Limitations
 

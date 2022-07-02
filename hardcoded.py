@@ -65,7 +65,7 @@ marker_groups = {
             "showIconInLegend": True,
         },
         {
-            "checked": True,
+            "checked": False,
             "createInfoWindow": True,
             "displayName": "Books",
             "groupName": "G_Book",
@@ -73,7 +73,7 @@ marker_groups = {
             "showIconInLegend": True,
         },
         {
-            "checked": True,
+            "checked": False,
             "createInfoWindow": True,
             "displayName": "Maps",
             "groupName": "G_Map",
@@ -81,7 +81,7 @@ marker_groups = {
             "showIconInLegend": True,
         },
         {
-            "checked": True,
+            "checked": False,
             "createInfoWindow": True,
             "displayName": "Enchanted Books",
             "groupName": "G_Enchanted_Book",

@@ -1,7 +1,6 @@
 import sys
 from argparse import ArgumentParser
 from pathlib import Path
-from pprint import pprint
 
 from nbt import region
 
@@ -91,7 +90,7 @@ def main():
     print(
         f"\n\nThe following entities were found but not have no filters designed for them:\n{markers.unmapped_overview}"
     )
-    print("Writing Output.")
+    print("\nWriting Output.")
     markers.write_output(RENDER)
     print("Done!")
 

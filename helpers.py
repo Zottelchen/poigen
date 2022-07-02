@@ -1,6 +1,6 @@
 from json import loads as parsedict
 
-from filterclass import FilterResult
+from filterclass import FilterResult, EmptyFilterResult
 from minecraft_data import ALL_ITEMS, HORSE_VARIANTS
 
 
@@ -121,7 +121,7 @@ def specific_item_search(poi, searched_item_ids: list, item_name: str):
         "minecraft:barrel",
     ]:
         if "LootTable" in poi:
-            return None
+            return EmptyFilterResult()
         else:
             if len(poi.get("Items", [])) > 0:
                 item_found = False
@@ -141,7 +141,7 @@ def specific_item_search(poi, searched_item_ids: list, item_name: str):
                 if item_found:
                     return FilterResult(item_name, "<br>".join(itemstring))
             else:
-                return None
+                return EmptyFilterResult()
     elif str(poi["id"]) == "minecraft:item_frame":
         if "Item" in poi:
             if str(poi["Item"]["id"]) in searched_item_ids:

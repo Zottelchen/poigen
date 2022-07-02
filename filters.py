@@ -46,7 +46,7 @@ def signFilter(poi):
             )
             return FilterResult("Sign", signstring)
         else:
-            return None
+            return EmptyFilterResult()
 
 
 def generic_chest_filter(poi):
@@ -60,7 +60,7 @@ def generic_chest_filter(poi):
         case _:
             return None
     if "LootTable" in poi:
-        return None
+        return EmptyFilterResult()
     else:
         if len(poi.get("Items", [])) > 0:
             return FilterResult(
@@ -68,7 +68,7 @@ def generic_chest_filter(poi):
                 "<br>".join(loop_over_generic_inventory(poi, storage_type)),
             )
         else:
-            return None
+            return EmptyFilterResult()
 
 
 def villagerFilter(poi):
@@ -81,7 +81,7 @@ def villagerFilter(poi):
             if "Offers" in poi:
                 for r in poi["Offers"]["Recipes"]:
                     trade = f"{r['buy']['Count']}x {translate_item_id(r['buy']['id'])}"
-                    if "buyB" in r and r["buyB"]["id"] != "minecraft:air":
+                    if "buyB" in r and str(r["buyB"]["id"]) != "minecraft:air":
                         trade = (
                             trade
                             + f" & {r['buyB']['Count']}x {translate_item_id(r['buyB']['id'])}"
