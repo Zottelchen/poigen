@@ -6,7 +6,7 @@ This is a temporary workaround for [Minecraft Overviewer](https://github.com/ove
 This does NOT generate a map, only the markers. Use Minecraft Overviewer to generate the map.
 
 ### Windows Build
-1. Download latest build.
+1. Download [latest build](https://github.com/Zottelchen/poigen/releases/tag/latest).
 2. Extract to a folder.
 3. Run `poigen.exe INPUT_WORLD RENDER_DIRECTORY` from the folder. (replace INPUT_WORLD with the path to the world folder and RENDER_DIRECTORY with the path to the directory where you already have rendered the world)
 
