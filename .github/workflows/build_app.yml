@@ -17,12 +17,11 @@ jobs:
         python-version: "3.10"
     - run: pip install pyinstaller
     - run: pyinstaller poigen.spec
-
     - uses: "marvinpinto/action-automatic-releases@latest"
       with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "latest"
           prerelease: false
-          title: "Development Build - ${{ date }}"
+          title: "Development Build - ${{ github.event.repository.updated_at}}"
           files: |
             dist/*
