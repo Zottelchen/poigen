@@ -150,8 +150,11 @@ def specific_item_search(poi, searched_item_ids: list, item_name: str):
                     translate_item_id(poi["Item"]["id"]) + add_item_name(poi["Item"]),
                 ]
                 if searched_item_ids == ["minecraft:enchanted_book"]:
-                    for ench in poi["Item"]["tag"]["StoredEnchantments"]:
-                        itemstring.append(f" - lvl{ench['lvl']} {ench['id']}")
+                    try:
+                        for ench in poi["Item"]["tag"]["StoredEnchantments"]:
+                            itemstring.append(f" - lvl{ench['lvl']} {ench['id']}")
+                    except KeyError:
+                        itemstring.append("!!! NO ENCHANTMENTS FOUND !!!")
                 return FilterResult(item_name, "<br>".join(itemstring))
     elif str(poi["id"]) == "minecraft:armor_stand":
         has_items = False
