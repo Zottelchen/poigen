@@ -2,26 +2,27 @@ on:
   push:
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        os: ['windows-latest'] #, 'ubuntu-latest', 'macos-latest'
+        os: ["windows-latest"] #, 'ubuntu-latest', 'macos-latest'
 
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-python@v2
-      with:
-        python-version: "3.11"
-    - run: pip install pyinstaller
-    - run: pyinstaller poigen.spec
-    - uses: "marvinpinto/action-automatic-releases@latest"
-      with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest"
-          prerelease: false
-          title: "Development Build - ${{ github.event.repository.updated_at}}"
-          files: |
-            dist/*
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.11"
+      - run: pip install pyinstaller
+      - run: pyinstaller poigen.spec
+      - uses: softprops/action-gh-release@v1
+        with:
+          name: "Development Build - ${{ github.sha }}"
+          generate_release_notes: true
+          files: dist/poigen.exe
