@@ -46,19 +46,14 @@ def bbbbFilter(poi):  # badly bugged blue books
                     if "Enchantments" in poi["Item"]["tag"]:
                         itemstring = [
                             "<b>Badly Bugged Blue Book found in Item Frame at {0}: </b>".format(
-                                formatCoordinates(
-                                    poi["Pos"][0], poi["Pos"][1], poi["Pos"][2]
-                                )
+                                formatCoordinates(poi["Pos"][0], poi["Pos"][1], poi["Pos"][2])
                             )
                         ]
                         itemstring.append(
-                            translateItemId(poi["Item"]["id"])
-                            + addItemName(poi["Item"])
+                            translateItemId(poi["Item"]["id"]) + addItemName(poi["Item"])
                         )
                         for ench in poi["Item"]["tag"]["Enchantments"]:
-                            itemstring.append(
-                                " - lvl{0} {1}".format(ench["lvl"], ench["id"])
-                            )
+                            itemstring.append(" - lvl{0} {1}".format(ench["lvl"], ench["id"]))
                         return ("Badly Bugged Blue Book", "<br>".join(itemstring))
                 else:
                     itemstring.append("NO TAG?!")
@@ -76,13 +71,9 @@ def bbbbFilter(poi):  # badly bugged blue books
                     if "tag" in item:
                         if "Enchantments" in item["tag"]:
                             has_items = True
-                            itemstring.append(
-                                translateItemId(item["id"]) + addItemName(item)
-                            )
+                            itemstring.append(translateItemId(item["id"]) + addItemName(item))
                             for ench in item["tag"]["Enchantments"]:
-                                itemstring.append(
-                                    " - lvl{0} {1}".format(ench["lvl"], ench["id"])
-                                )
+                                itemstring.append(" - lvl{0} {1}".format(ench["lvl"], ench["id"]))
                     else:
                         has_items = True
                         itemstring.append("NO TAG?!")
@@ -92,13 +83,9 @@ def bbbbFilter(poi):  # badly bugged blue books
                     if "tag" in item:
                         if "Enchantments" in item["tag"]:
                             has_items = True
-                            itemstring.append(
-                                translateItemId(item["id"]) + addItemName(item)
-                            )
+                            itemstring.append(translateItemId(item["id"]) + addItemName(item))
                             for ench in item["tag"]["Enchantments"]:
-                                itemstring.append(
-                                    " - lvl{0} {1}".format(ench["lvl"], ench["id"])
-                                )
+                                itemstring.append(" - lvl{0} {1}".format(ench["lvl"], ench["id"]))
                     else:
                         has_items = True
                         itemstring.append("NO TAG?!")
