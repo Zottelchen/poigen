@@ -5,15 +5,17 @@ from json import loads as parsedict
 from pathlib import Path
 
 import tabulate
-
 from nbt import region
 
 # CONFIG
 WORLD = Path(r"F:\drehmal22")
 DELETE_AFTER = False
+LOGFILE = Path("books/_LOG.txt")
+LISTFILE = Path("books/_list.md")
 
 # WORK WORK WORK
 unsafe_chars_pattern = re.compile(r'[<>:"/\\|?*]')
+LOGFILE = open(LOGFILE, "a", encoding="utf-8", buffering=1)
 
 
 if not WORLD.is_dir():
@@ -122,6 +124,7 @@ def booksearch(entity):
 def main():
     world_files = list(WORLD.glob("**/*.mca"))
     wf_len = len(world_files)
+    book_list = []
     for index, wf in enumerate(world_files):
         region_file = region.RegionFile(wf.as_posix(), "rb")
         chunks = region_file.get_chunks()
@@ -146,6 +149,7 @@ def main():
                             book = booksearch(entity)
 
                             if book:
+                                book_list.append({"title": book["title"], "tp": book["tp"]})
                                 filename = re.sub(unsafe_chars_pattern, "_", str(book["title"]))
                                 if book["title"] == "No Title" or book["title"] == "":
                                     filename = f"No Title-{generate_hash(book['text']+book['tp'])}"
@@ -157,12 +161,32 @@ def main():
                                 print(
                                     f"[{index}/{wf_len}][{from_file}][{chunk['x']},{chunk['z']}] Found Book: {book['title']}. Saving as '{filename}.md'"
                                 )
+                                print(
+                                    f"[{index}/{wf_len}][{from_file}][{chunk['x']},{chunk['z']}] Found Book: {book['title']}. Saving as '{filename}.md'",
+                                    file=LOGFILE,
+                                    flush=True,
+                                )
+                                Path(f"books/{filename}.md").parent.mkdir(
+                                    parents=True, exist_ok=True
+                                )
                                 with open(f"books/{filename}.md", "w", encoding="utf-8") as fo:
                                     fo.write(
                                         f"---\ntitle: {book['title']}\nauthor: {book['author']}\nentity: {book['found_in']}\ntp: {book['tp']}\nfile: {from_file}\n---\n\n{book['text']}"
                                     )
+
         if DELETE_AFTER and index > 0:
             world_files[index - 1].unlink()
+
+    with open(LISTFILE, "w", encoding="utf-8") as fo:
+        fo.write(
+            tabulate.tabulate(
+                book_list,
+                headers="keys",
+                tablefmt="github",
+                showindex="always",
+                disable_numparse=True,
+            )
+        )
 
 
 if __name__ == "__main__":
