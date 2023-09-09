@@ -1,2 +1,3 @@
 NBT
 tabulate
+pyinstaller
