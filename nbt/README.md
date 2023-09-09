@@ -1,1 +1,0 @@
-This is a frozen version of [Twoolie/NBT](https://github.com/twoolie/NBT) which contains a small fix removing the circular import when building a package.
