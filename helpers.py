@@ -1,6 +1,6 @@
 from json import loads as parsedict
 
-from filterclass import FilterResult, EmptyFilterResult
+from filterclass import EmptyFilterResult, FilterResult
 from minecraft_data import ALL_ITEMS, HORSE_VARIANTS
 
 
@@ -29,17 +29,13 @@ def translate_item_id(itemid: str, iconsuffix=False, iconprefix=True) -> str:
     if itemid in ALL_ITEMS:
         istr = ""
         if iconprefix:
-            istr += (
-                '<img src="icons/{0}.png" alt="{1}" width="16" height="16"> '.format(
-                    itemid.split(":")[1], ALL_ITEMS[itemid]
-                )
+            istr += '<img src="icons/{0}.png" alt="{1}" width="16" height="16"> '.format(
+                itemid.split(":")[1], ALL_ITEMS[itemid]
             )
         istr += ALL_ITEMS[itemid]
         if iconsuffix:
-            istr += (
-                ' <img src="icons/{0}.png" alt="{1}" width="16" height="16">'.format(
-                    itemid.split(":")[1], ALL_ITEMS[itemid]
-                )
+            istr += ' <img src="icons/{0}.png" alt="{1}" width="16" height="16">'.format(
+                itemid.split(":")[1], ALL_ITEMS[itemid]
             )
         return istr
     else:
@@ -138,9 +134,7 @@ def specific_item_search(poi, searched_item_ids: list, item_name: str):
                         if searched_item_ids == ["minecraft:enchanted_book"]:
                             try:
                                 for ench in item["tag"]["StoredEnchantments"]:
-                                    itemstring.append(
-                                        f" - lvl{ench['lvl']} {ench['id']}"
-                                    )
+                                    itemstring.append(f" - lvl{ench['lvl']} {ench['id']}")
                             except KeyError:
                                 itemstring.append("NO ENCHANTMENTS FOUND ?")
                                 print("NO ENCHANT:", item)
