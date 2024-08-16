@@ -3,12 +3,15 @@ from argparse import ArgumentParser
 from pathlib import Path
 
 from nbt import region
-from POIDB import POIDB
+
+from poigen.POIDB import POIDB
 
 
 def handle_entities(markers: POIDB, world_dir: Path):
     entity_files = list(world_dir.glob("entities/*.mca"))
-    print(f"Starting with external entity files. Found {len(entity_files)} entity files.")
+    print(
+        f"Starting with external entity files. Found {len(entity_files)} entity files."
+    )
     if len(entity_files) == 0:
         print("There were no entity files.")
         return

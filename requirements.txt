@@ -1,3 +1,0 @@
-NBT
-tabulate
-pyinstaller

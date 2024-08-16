@@ -1,7 +1,7 @@
 from json import loads as parsedict
 
-from filterclass import EmptyFilterResult, FilterResult
-from minecraft_data import ALL_ITEMS, HORSE_VARIANTS
+from poigen.filterclass import EmptyFilterResult, FilterResult
+from poigen.minecraft_data import ALL_ITEMS, HORSE_VARIANTS
 
 
 def add_item_name(itemdict):
@@ -29,13 +29,17 @@ def translate_item_id(itemid: str, iconsuffix=False, iconprefix=True) -> str:
     if itemid in ALL_ITEMS:
         istr = ""
         if iconprefix:
-            istr += '<img src="icons/{0}.png" alt="{1}" width="16" height="16"> '.format(
-                itemid.split(":")[1], ALL_ITEMS[itemid]
+            istr += (
+                '<img src="icons/{0}.png" alt="{1}" width="16" height="16"> '.format(
+                    itemid.split(":")[1], ALL_ITEMS[itemid]
+                )
             )
         istr += ALL_ITEMS[itemid]
         if iconsuffix:
-            istr += ' <img src="icons/{0}.png" alt="{1}" width="16" height="16">'.format(
-                itemid.split(":")[1], ALL_ITEMS[itemid]
+            istr += (
+                ' <img src="icons/{0}.png" alt="{1}" width="16" height="16">'.format(
+                    itemid.split(":")[1], ALL_ITEMS[itemid]
+                )
             )
         return istr
     else:
@@ -62,9 +66,9 @@ def format_horse(name: str, poi, translate_markings=False):
         if str(attr["Name"]) == "minecraft:generic.movement_speed":
             horsearr[1] += str(round(float(str(attr["Base"])), 3))
         elif str(attr["Name"]) == "minecraft:generic.max_health":
-            horsearr[
-                3
-            ] += f'{float(str(attr["Base"])) / 2.0} <img src="icons/heart.png" alt="Hearts" width="16" height="16">'
+            horsearr[3] += (
+                f'{float(str(attr["Base"])) / 2.0} <img src="icons/heart.png" alt="Hearts" width="16" height="16">'
+            )
         elif str(attr["Name"]) == "minecraft:horse.jump_strength":
             horsearr[2] += str(round(float(str(attr["Base"])), 3))
         elif str(poi["id"]) == "minecraft:donkey":
@@ -134,7 +138,9 @@ def specific_item_search(poi, searched_item_ids: list, item_name: str):
                         if searched_item_ids == ["minecraft:enchanted_book"]:
                             try:
                                 for ench in item["tag"]["StoredEnchantments"]:
-                                    itemstring.append(f" - lvl{ench['lvl']} {ench['id']}")
+                                    itemstring.append(
+                                        f" - lvl{ench['lvl']} {ench['id']}"
+                                    )
                             except KeyError:
                                 itemstring.append("NO ENCHANTMENTS FOUND ?")
                                 print("NO ENCHANT:", item)

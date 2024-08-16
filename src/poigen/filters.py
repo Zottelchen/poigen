@@ -1,8 +1,8 @@
 from html import escape
 from json import loads as parsedict
 
-from filterclass import EmptyFilterResult, FilterResult
-from helpers import (
+from poigen.filterclass import EmptyFilterResult, FilterResult
+from poigen.helpers import (
     add_item_name,
     format_coordinates,
     format_horse,
@@ -83,7 +83,8 @@ def villagerFilter(poi):
                     trade = f"{r['buy']['Count']}x {translate_item_id(r['buy']['id'])}"
                     if "buyB" in r and str(r["buyB"]["id"]) != "minecraft:air":
                         trade = (
-                            trade + f" & {r['buyB']['Count']}x {translate_item_id(r['buyB']['id'])}"
+                            trade
+                            + f" & {r['buyB']['Count']}x {translate_item_id(r['buyB']['id'])}"
                         )
                     trade = (
                         trade
@@ -161,7 +162,9 @@ def generic_entity_filter(poi):
 
 
 def booksFilter(poi):
-    return specific_item_search(poi, ["minecraft:written_book", "minecraft:writable_book"], "Book")
+    return specific_item_search(
+        poi, ["minecraft:written_book", "minecraft:writable_book"], "Book"
+    )
 
 
 def itemframeFilter(poi):

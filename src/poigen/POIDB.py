@@ -1,11 +1,12 @@
 import json
 from pathlib import Path
 
-from filterclass import EmptyFilterResult, FilterResult
-from filters import all_filters
-from hardcoded import marker_groups
-from helpers import get_coordinate
 from nbt import nbt
+
+from poigen.filterclass import EmptyFilterResult, FilterResult
+from poigen.filters import all_filters
+from poigen.hardcoded import marker_groups
+from poigen.helpers import get_coordinate
 
 
 class POIDB:
@@ -81,7 +82,8 @@ class POIDB:
                             "raw": [
                                 {
                                     "hovertext": returned_entity.result_type,
-                                    "text": returned_entity.hint or returned_entity.result_type,
+                                    "text": returned_entity.hint
+                                    or returned_entity.result_type,
                                     "x": get_coordinate(entity, "x"),
                                     "y": get_coordinate(entity, "y"),
                                     "z": get_coordinate(entity, "z"),
@@ -90,8 +92,13 @@ class POIDB:
                         }
                 elif type(returned_entity) is EmptyFilterResult:
                     had_return = True
-                elif returned_entity is not None and type(returned_entity) is not FilterResult:
-                    print(f"!! Weird return from filters for {entity['id']} : {returned_entity}")
+                elif (
+                    returned_entity is not None
+                    and type(returned_entity) is not FilterResult
+                ):
+                    print(
+                        f"!! Weird return from filters for {entity['id']} : {returned_entity}"
+                    )
             if not had_return:
                 if str(entity["id"]) in self.unmapped.keys():
                     self.unmapped[str(entity["id"])] += 1

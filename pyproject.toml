@@ -1,14 +1,24 @@
-[tool.poetry]
+[project]
 name = "poigen"
 version = "0.1.0"
-description = ""
-authors = ["Zottelchen <github@zottelchen.com>"]
+description = "Add your description here"
+authors = [{ name = "Zottelchen", email = "github@zottelchen.com" }]
+dependencies = ["nbt>=1.5.1", "tabulate>=0.9.0"]
 readme = "README.md"
-
-[tool.poetry.dependencies]
-python = "^3.11"
-
+requires-python = ">= 3.8"
+classifiers = ["Private :: Do Not Upload"]
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.rye]
+managed = true
+dev-dependencies = []
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/poigen"]
+entry-points = ["poigen=poigen:main"]
