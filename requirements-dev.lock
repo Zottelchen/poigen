@@ -10,7 +10,14 @@
 #   universal: false
 
 -e file:.
+minecraftmap @ git+https://github.com/jason-green-io/minecraftmap.git@d963488d4ed4ef414d60b6a7a9cb2c9c6295200a
+    # via poigen
 nbt==1.5.1
+    # via minecraftmap
+    # via poigen
+pillow==10.4.0
+    # via minecraftmap
+python-dotenv==1.0.1
     # via poigen
 tabulate==0.9.0
     # via poigen

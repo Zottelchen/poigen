@@ -160,5 +160,4 @@ cython_debug/
 
 *.zip
 books/
-book_exporter/books/
-book_exporter/books/_LOG.txt
+maps/
