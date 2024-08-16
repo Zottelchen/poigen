@@ -1,10 +1,14 @@
+import os
 import sys
 from argparse import ArgumentParser
 from pathlib import Path
 
+from dotenv import load_dotenv
 from nbt import region
 
 from poigen.POIDB import POIDB
+
+load_dotenv()
 
 
 def handle_entities(markers: POIDB, world_dir: Path):
@@ -45,7 +49,7 @@ def handle_tile_entities(markers: POIDB, world_dir: Path):
         if len(chunks) > 0:
             for chunk in chunks:
                 chunk_nbt = region_file.get_nbt(chunk["x"], chunk["z"])
-                if len(chunk_nbt["Level"]["TileEntities"]) > 0:
+                if "Level" in chunk_nbt and len(chunk_nbt["Level"]["TileEntities"]) > 0:
                     print(
                         f"\t\tFound {len(chunk_nbt['Level']['TileEntities'])} Entities in Chunk {chunk['x']}, {chunk['z']}"
                     )
@@ -54,8 +58,12 @@ def handle_tile_entities(markers: POIDB, world_dir: Path):
 
 def main():
     parser = ArgumentParser(description="POIGen by Zottelchen")
-    parser.add_argument("world_directory", help="Directory of the Minecraft World")
-    parser.add_argument("render_directory", help="Directory of the Overviewer Render")
+    if os.getenv("WORLD_DIRECTORY") is None:
+        parser.add_argument("world_directory", help="Directory of the Minecraft World")
+    if os.getenv("RENDER_DIRECTORY") is None:
+        parser.add_argument(
+            "render_directory", help="Directory of the Overviewer Render"
+        )
     parser.add_argument(
         "--skip_entities",
         help="Skips entities (from the entity directory) like horses, villagers, item frames, armor stands, etc.",
@@ -68,8 +76,14 @@ def main():
     )
 
     args = parser.parse_args()
-    WORLD = Path(args.world_directory)
-    RENDER = Path(args.render_directory)
+    if os.getenv("WORLD_DIRECTORY") is None:
+        WORLD = Path(args.world_directory)
+    else:
+        WORLD = Path(os.getenv("WORLD_DIRECTORY"))
+    if os.getenv("RENDER_DIRECTORY") is None:
+        RENDER = Path(args.render_directory)
+    else:
+        RENDER = Path(os.getenv("RENDER_DIRECTORY"))
 
     if not RENDER.is_dir() or not WORLD.is_dir():
         print("World or Render directory is not a folder path.")
