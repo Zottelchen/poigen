@@ -20,8 +20,15 @@ def add_item_name(itemdict):
     return ""
 
 
-def format_coordinates(x, y, z):
+def format_coordinates_str(x, y, z):
     return "{:.1f}, {:.1f}, {:.1f}".format(float(str(x)), float(str(y)), float(str(z)))
+
+
+def format_coordinates(poi):
+    try:
+        return format_coordinates_str(poi["x"], poi["y"], poi["z"])
+    except KeyError:
+        return format_coordinates_str(poi["Pos"][0], poi["Pos"][1], poi["Pos"][2])
 
 
 def translate_item_id(itemid: str, iconsuffix=False, iconprefix=True) -> str:
@@ -62,17 +69,18 @@ def format_horse(name: str, poi, translate_markings=False):
         "Jump Strength: ",
         "Health: ",
     ]
-    for attr in poi["Attributes"]:
-        if str(attr["Name"]) == "minecraft:generic.movement_speed":
-            horsearr[1] += str(round(float(str(attr["Base"])), 3))
-        elif str(attr["Name"]) == "minecraft:generic.max_health":
-            horsearr[3] += (
-                f'{float(str(attr["Base"])) / 2.0} <img src="icons/heart.png" alt="Hearts" width="16" height="16">'
-            )
-        elif str(attr["Name"]) == "minecraft:horse.jump_strength":
-            horsearr[2] += str(round(float(str(attr["Base"])), 3))
-        elif str(poi["id"]) == "minecraft:donkey":
-            horsearr[2] += "No."
+    if "Attributes" in poi:
+        for attr in poi["Attributes"]:
+            if str(attr["Name"]) == "minecraft:generic.movement_speed":
+                horsearr[1] += str(round(float(str(attr["Base"])), 3))
+            elif str(attr["Name"]) == "minecraft:generic.max_health":
+                horsearr[3] += (
+                    f'{float(str(attr["Base"])) / 2.0} <img src="icons/heart.png" alt="Hearts" width="16" height="16">'
+                )
+            elif str(attr["Name"]) == "minecraft:horse.jump_strength":
+                horsearr[2] += str(round(float(str(attr["Base"])), 3))
+            elif str(poi["id"]) == "minecraft:donkey":
+                horsearr[2] += "No."
 
     if translate_markings:
         horsearr.append(
@@ -85,11 +93,13 @@ def format_horse(name: str, poi, translate_markings=False):
 
 def loop_over_generic_inventory(poi, entity_name):
     items = poi.get("Items", [])
+
     itemstring = [
-        f"<b>{entity_name} with {len(items)} items at {format_coordinates(poi['x'], poi['y'], poi['z'])}: </b>"
+        f"<b>{entity_name} with {len(items)} items at {format_coordinates(poi)}: </b>"
     ]
+
     for item in items:
-        istring = f"{item['Count']}x {translate_item_id(item['id'])}"
+        istring = f"{item['Count'] if 'Count' in item else item['count']}x {translate_item_id(item['id'])}"
         istring = istring + add_item_name(item)
         itemstring.append(istring)
     return itemstring
@@ -113,12 +123,23 @@ def get_coordinate(poi, xyz: str):
             case "z":
                 return int(float(str(poi["Pos"][2])))
 
+def get_coordinates(poi):
+    return { "x": get_coordinate(poi, "x"), "y": get_coordinate(poi, "y"), "z": get_coordinate(poi, "z") }
+
 
 def specific_item_search(poi, searched_item_ids: list, item_name: str):
     if str(poi["id"]) in [
         "minecraft:trapped_chest",
         "minecraft:chest",
         "minecraft:barrel",
+        "minecraft:dropper",
+        "minecraft:dispenser",
+        "minecraft:furnace",
+        "minecraft:brewing_stand",
+        "minecraft:hopper",
+        "minecraft:shulker_box",
+        "minecraft:chest_minecart",
+        "minecraft:hopper_minecart",
     ]:
         if "LootTable" in poi:
             return EmptyFilterResult()
@@ -127,7 +148,7 @@ def specific_item_search(poi, searched_item_ids: list, item_name: str):
                 item_found = False
                 items = poi.get("Items", [])
                 itemstring = [
-                    f"<b>{item_name} found at {format_coordinates(poi['x'], poi['y'], poi['z'])}: </b>"
+                    f"<b>{item_name} found at {format_coordinates(poi)}: </b>"
                 ]
                 for item in items:
                     if str(item["id"]) in searched_item_ids:
@@ -152,7 +173,7 @@ def specific_item_search(poi, searched_item_ids: list, item_name: str):
         if "Item" in poi:
             if str(poi["Item"]["id"]) in searched_item_ids:
                 itemstring = [
-                    f"<b>{item_name} found in Item Frame at {format_coordinates(poi['Pos'][0], poi['Pos'][1], poi['Pos'][2])}: </b>",
+                    f"<b>{item_name} found in Item Frame at {format_coordinates(poi)}: </b>",
                     translate_item_id(poi["Item"]["id"]) + add_item_name(poi["Item"]),
                 ]
                 if searched_item_ids == ["minecraft:enchanted_book"]:
@@ -166,7 +187,7 @@ def specific_item_search(poi, searched_item_ids: list, item_name: str):
     elif str(poi["id"]) == "minecraft:armor_stand":
         has_items = False
         itemstring = [
-            f"<b>Book found in Armor Stand at {format_coordinates(poi['Pos'][0], poi['Pos'][1], poi['Pos'][2])}: </b>"
+            f"<b>Book found in Armor Stand at {format_coordinates(poi)}: </b>"
         ]
         for item in poi["HandItems"]:
             has_items, itemstring = search_in_armor_stand(
@@ -193,7 +214,7 @@ def specific_item_search(poi, searched_item_ids: list, item_name: str):
                         print("NO ENCHANT:", poi["Book"])
                 return FilterResult(
                     item_name,
-                    f"<b>{item_name} found in Lectern at {format_coordinates(poi['x'], poi['y'], poi['z'])}:</b><br>{istring}",
+                    f"<b>{item_name} found in Lectern at {format_coordinates(poi)}:</b><br>{istring}",
                 )
 
 
