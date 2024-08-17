@@ -27,11 +27,9 @@ def main():
         map_id = int(os.path.basename(map_file).split("_")[1].split(".")[0])
         try:
             m = minecraftmap.Map(map_file, eco=False)
-            m.saveimagepng("./maps/" + os.path.basename(map_file) + ".png")
+            m.saveimagepng("./maps/" + os.path.basename(map_file).replace('.dat','') + ".png")
         except IndexError:
             print(f"\tFAILED - /give @s minecraft:filled_map{{map:{map_id}}}")
-            with open("./maps/FAILED-" + os.path.basename(map_file) + ".txt", "w") as f:
-                f.write(f"FAILED - /give @s minecraft:filled_map{{map:{map_id}}}")
             with open("./maps/ALL-FAILED.txt", "a") as f:
                 f.write(f"/give @s minecraft:filled_map{{map:{map_id}}}\n")
 
