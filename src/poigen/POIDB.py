@@ -17,9 +17,8 @@ class POIDB:
 
     @property
     def counter(self):
-        current_counter = self._counter
         self._counter += 1
-        return current_counter
+        return self._counter
 
     @property
     def unmapped_overview(self):
