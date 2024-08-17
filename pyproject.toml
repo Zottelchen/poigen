@@ -8,7 +8,6 @@ dependencies = [
     "tabulate>=0.9.0",
     "python-dotenv>=1.0.1",
     "minecraftmap @ git+https://github.com/jason-green-io/minecraftmap.git",
-    "shortuuid>=1.0.13",
 ]
 readme = "README.md"
 requires-python = ">= 3.8"

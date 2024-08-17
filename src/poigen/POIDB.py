@@ -1,7 +1,6 @@
 import json
 from pathlib import Path
 
-import shortuuid
 from nbt import nbt
 
 from poigen.filterclass import EmptyFilterResult, FilterResult
@@ -14,6 +13,13 @@ class POIDB:
         self.entities = {}
         self.unmapped = {}
         self.world_name = world_name
+        self._counter = 0
+
+    @property
+    def counter(self):
+        current_counter = self._counter
+        self._counter += 1
+        return current_counter
 
     @property
     def unmapped_overview(self):
@@ -45,7 +51,7 @@ class POIDB:
                         f'{returned_entity.result_type.replace(" ", "_")}-marker-set'
                     )
 
-                    marker_uuid = f"{returned_entity.result_type}-{shortuuid.uuid()}"
+                    marker_uuid = f"{returned_entity.result_type}-{self.counter}"
                     new_marker = {
                         "type": "poi",
                         "position": get_coordinates(entity),
@@ -90,7 +96,7 @@ class POIDB:
             )
             dict_key = f'{entity_type.replace(" ", "_")}-marker-set'
             for entity in json_data[entity_type]:
-                marker_uuid = f"{entity_type}-{entity}-{shortuuid.uuid()}"
+                marker_uuid = f"{entity_type}-{entity}-{self.counter}"
                 new_marker = {
                     "type": "poi",
                     "position": json_data[entity_type][entity],
