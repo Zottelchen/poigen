@@ -56,7 +56,7 @@ class POIDB:
                         "position": get_coordinates(entity),
                         "label": returned_entity.result_type,
                         # optional:
-                        "icon": f"assets/marker/{returned_entity.result_type.lower()}.png",
+                        "icon": f"assets/marker/{returned_entity.result_type.lower().replace(" ","_")}.png",
                         # other stuff we could add: anchor, sorting, listed, classes (css), min-distance, max-distance
                     }
                     if returned_entity.hint is not None:
@@ -101,7 +101,7 @@ class POIDB:
                     "position": json_data[entity_type][entity],
                     "label": entity,
                     # optional:
-                    "icon": f"assets/marker/{entity_type.lower()}.png",
+                    "icon": f"assets/marker/{entity_type.lower().replace(" ","_")}.png",
                     # other stuff we could add: anchor, sorting, listed, classes (css), min-distance, max-distance
                 }
                 if dict_key in self.entities.keys():
