@@ -36,17 +36,13 @@ def translate_item_id(itemid: str, iconsuffix=False, iconprefix=True) -> str:
     if itemid in ALL_ITEMS:
         istr = ""
         if iconprefix:
-            istr += (
-                '<img src="icons/{0}.png" alt="{1}" width="16" height="16"> '.format(
-                    itemid.split(":")[1], ALL_ITEMS[itemid]
-                )
+            istr += '<img src="assets/icons/{0}.png" alt="{1}" width="16" height="16"> '.format(
+                itemid.split(":")[1], ALL_ITEMS[itemid]
             )
         istr += ALL_ITEMS[itemid]
         if iconsuffix:
-            istr += (
-                ' <img src="icons/{0}.png" alt="{1}" width="16" height="16">'.format(
-                    itemid.split(":")[1], ALL_ITEMS[itemid]
-                )
+            istr += ' <img src="assets/icons/{0}.png" alt="{1}" width="16" height="16">'.format(
+                itemid.split(":")[1], ALL_ITEMS[itemid]
             )
         return istr
     else:
@@ -75,7 +71,7 @@ def format_horse(name: str, poi, translate_markings=False):
                 horsearr[1] += str(round(float(str(attr["Base"])), 3))
             elif str(attr["Name"]) == "minecraft:generic.max_health":
                 horsearr[3] += (
-                    f'{float(str(attr["Base"])) / 2.0} <img src="icons/heart.png" alt="Hearts" width="16" height="16">'
+                    f'{float(str(attr["Base"])) / 2.0} <img src="assets/icons/heart.png" alt="Hearts" width="16" height="16">'
                 )
             elif str(attr["Name"]) == "minecraft:horse.jump_strength":
                 horsearr[2] += str(round(float(str(attr["Base"])), 3))
@@ -84,7 +80,7 @@ def format_horse(name: str, poi, translate_markings=False):
 
     if translate_markings:
         horsearr.append(
-            '<img src="horses/{0}.webp" alt="{1}" width="108" height="120">'.format(
+            '<img src="assets/horses/{0}.webp" alt="{1}" width="108" height="120">'.format(
                 poi["Variant"], translate_horse_markings(poi["Variant"])
             )
         )
@@ -123,8 +119,13 @@ def get_coordinate(poi, xyz: str):
             case "z":
                 return int(float(str(poi["Pos"][2])))
 
+
 def get_coordinates(poi):
-    return { "x": get_coordinate(poi, "x"), "y": get_coordinate(poi, "y"), "z": get_coordinate(poi, "z") }
+    return {
+        "x": get_coordinate(poi, "x"),
+        "y": get_coordinate(poi, "y"),
+        "z": get_coordinate(poi, "z"),
+    }
 
 
 def specific_item_search(poi, searched_item_ids: list, item_name: str):
