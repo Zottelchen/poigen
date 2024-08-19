@@ -130,9 +130,9 @@ def generic_entity_filter(poi):
         "minecraft:blaze": "Blaze",
         "minecraft:brewing_stand": "Brewing Stand",
         "minecraft:cat": "Cat",
-        "minecraft:chicken": "Chicken",
+        # "minecraft:chicken": "Chicken", # todo: reenable once Bluemap improves marker performance
         "minecraft:conduit": "Conduit",
-        "minecraft:cow": "Cow",
+        # "minecraft:cow": "Cow", # todo: reenable once Bluemap improves marker performance
         "minecraft:dolphin": "Dolphin",
         "minecraft:drowned": "Drowned",
         "minecraft:elder_guardian": "Elder Guardian",
@@ -142,7 +142,7 @@ def generic_entity_filter(poi):
         "minecraft:evoker": "Evoker",
         "minecraft:fox": "Fox",
         "minecraft:glow_squid": "Glow Squid",
-        "minecraft:goat": "Goat",
+        # "minecraft:goat": "Goat", # todo: reenable once Bluemap improves marker performance
         "minecraft:guardian": "Guardian",
         "minecraft:illusioner": "Illusioner",
         "minecraft:iron_golem": "Iron Golem",
@@ -151,13 +151,13 @@ def generic_entity_filter(poi):
         "minecraft:ocelot": "Ocelot",
         "minecraft:panda": "Panda",
         "minecraft:parrot": "Parrot",
-        "minecraft:pig": "Pig",
+        # "minecraft:pig": "Pig", # todo: reenable once Bluemap improves marker performance
         "minecraft:piglin": "Piglin",
         "minecraft:piglin_brute": "Piglin Brute",
         "minecraft:pillager": "Pillager",
         "minecraft:polar_bear": "Polar Bear",
-        "minecraft:rabbit": "Rabbit",
-        "minecraft:sheep": "Sheep",
+        # "minecraft:rabbit": "Rabbit", # todo: reenable once Bluemap improves marker performance
+        # "minecraft:sheep": "Sheep", # todo: reenable once Bluemap improves marker performance
         "minecraft:skull": "Skull",  # todo: move to special filter displaying skin?
         "minecraft:slime": "Slime",
         "minecraft:strider": "Strider",
@@ -259,8 +259,6 @@ def spawnerFilter(poi):
 all_filters = [
     signFilter,
     generic_chest_filter,  # contains the code for chests, trapped chests & barrels
-    # towerFilter,  # static Towns (currently not implemented)
-    # townFilter,  # static Towers (currently not implemented)
     armorstandFilter,
     booksFilter,  # finds written books in all sorts of containers
     enchantedbooksFilter,  # finds enchanted books in all sorts of containers
